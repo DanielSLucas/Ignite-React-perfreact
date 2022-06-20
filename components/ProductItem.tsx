@@ -1,7 +1,8 @@
 /* eslint-disable react/display-name */
-import dynamic from 'next/dynamic';
 import React, { memo, useState } from 'react';
 import { AddProductToWishListProps } from './AddProductToWishList';
+import dynamic from 'next/dynamic';
+import lodash from 'lodash';
 
 // importação condicional, só acontece se for usada
 // se for no react puro, usar a função "lazy" aon invés de "dynamic"
@@ -68,5 +69,5 @@ const ProductItemComponent: React.FC<ProductItemProps> = ({ product, onAddToWish
 
 
 export const ProductItem = memo(ProductItemComponent, (prevProps, nextProps) => {
-  return Object.is(prevProps.product, nextProps.product);
+  return lodash.isEqual(prevProps.product, nextProps.product);
 });

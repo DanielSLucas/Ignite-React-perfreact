@@ -94,3 +94,13 @@ export default SearchResults;
  * preferir fazer a formatação de dados no momento em que eles são buscados/alterados
  * ao invés de fazer a formatação na hora da renderização ou em um useMemo
  */
+
+/**
+ * https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer
+ * Bundle analyzer
+ * Permite analizar o impacto que cada lib tem no bundle final
+ * Como no caso, a utilização do Lodash tem em nosso projeto
+ * executar:
+ * ANALYZE=true yarn build
+ * vai gerar um html que utilizaremos para analisar os tamanhos
+ */
