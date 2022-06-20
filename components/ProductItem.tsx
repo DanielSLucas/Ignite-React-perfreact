@@ -1,5 +1,16 @@
 /* eslint-disable react/display-name */
-import React, { memo } from 'react';
+import dynamic from 'next/dynamic';
+import React, { memo, useState } from 'react';
+import { AddProductToWishListProps } from './AddProductToWishList';
+
+// importação condicional, só acontece se for usada
+// se for no react puro, usar a função "lazy" aon invés de "dynamic"
+// https://pt-br.reactjs.org/docs/code-splitting.html
+const AddProductToWishList = dynamic<AddProductToWishListProps>(() => {
+  return import('./AddProductToWishList').then(mod => mod.AddProductToWishList)
+}, {
+  loading: () => <span>Carregando...</span>
+})
 
 type Product = {
   id: number,
@@ -14,10 +25,26 @@ interface ProductItemProps {
 }
 
 const ProductItemComponent: React.FC<ProductItemProps> = ({ product, onAddToWishList }) => {
+  const [isAddingToWishList, setIsAddingToWishList] = useState(false);
+
+  // importação condicional
+  // async function showFormattedDate() {
+  //   const { format } = await import('date-fns')
+
+  //   format()
+  // }
+
   return (
     <div>
-      {product.title} -  <strong>{product.priceFormatted}</strong>
-      <button onClick={() => onAddToWishList(product.id)}>Favoritar</button>
+      {product.title} -  <strong>{product.priceFormatted}</strong>      
+      <button onClick={() => setIsAddingToWishList(true)} >Adicionar aos favoritos</button>
+      
+      {isAddingToWishList && (
+        <AddProductToWishList 
+          onAddToWishList={() => onAddToWishList(product.id)}
+          onRequestClose={() => setIsAddingToWishList(false)}
+        />
+      )}
     </div>
   )
 }
