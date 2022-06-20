@@ -1,3 +1,4 @@
+import { List, ListRowRenderer } from 'react-virtualized';
 import React, { useMemo } from 'react';
 import { ProductItem } from './ProductItem';
 
@@ -21,11 +22,34 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, totalPrice,onAdd
   //   }, 0)
   // }, [results])
   
+  // -> Virtualização
+  // Evita que tudo seja carregado em tela de uma vez, carregando somente o que será exibido
+  // conforme o scroll do usuário
+  // https://bvaughn.github.io/react-virtualized/#/components/List
+
+  const rowRenderer: ListRowRenderer = ({ index, key, style }) => {
+    return (
+      <div key={key} style={style}>
+        <ProductItem           
+          product={results[index]} 
+          onAddToWishList={onAddToWishList} 
+        />
+      </div>
+    )
+  }
+
   return (
     <div>
       <h2>{totalPrice}</h2>
-
-      {results.map(product => {
+      <List 
+        height={300}
+        rowHeight={30}
+        width={900}
+        overscanRowCount={5}
+        rowCount={results.length}
+        rowRenderer={rowRenderer}
+      />
+      {/* {results.map(product => {
         return (
           <ProductItem 
             key={product.id}
@@ -33,7 +57,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, totalPrice,onAdd
             onAddToWishList={onAddToWishList} 
           />
         );
-      })}
+      })} */}
     </div>
   );
 }
