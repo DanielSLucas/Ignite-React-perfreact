@@ -10,9 +10,10 @@ type Product = {
 // import { Container } from './styles';
 interface SearchResultsProps {
   results: Product[];
+  onAddToWishList(id: number): Promise<void>;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ results, onAddToWishList }) => {
   const totalPrice = useMemo(() => {
     return results.reduce((total, product) => {
       return total + product.price;
@@ -25,7 +26,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
 
       {results.map(product => {
         return (
-          <ProductItem product={product}/>
+          <ProductItem 
+            key={product.id}
+            product={product} 
+            onAddToWishList={onAddToWishList} 
+          />
         );
       })}
     </div>
@@ -50,4 +55,11 @@ export default SearchResults;
  * Casos de uso
  * 1. Calculos pesados
  * 2. Igualdade refencial (quando passamos a informação para um componente filho)
+ */
+
+/**
+ * -> useCallback
+ * evita que a função seja recriada a cada redenrização,
+ * o que pode ser um problema se a função for repassada para vários componentes
+ * (context, prop drilling...)
  */

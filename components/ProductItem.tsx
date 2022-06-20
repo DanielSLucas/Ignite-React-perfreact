@@ -9,12 +9,14 @@ type Product = {
 
 interface ProductItemProps {
   product: Product;
+  onAddToWishList(id: number): Promise<void>;
 }
 
-const ProductItemComponent: React.FC<ProductItemProps> = ({ product }) => {
+const ProductItemComponent: React.FC<ProductItemProps> = ({ product, onAddToWishList }) => {
   return (
     <div>
       {product.title} -  <strong>{product.price}</strong>
+      <button onClick={() => onAddToWishList(product.id)}>Favoritar</button>
     </div>
   )
 }
