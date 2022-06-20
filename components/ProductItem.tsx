@@ -5,6 +5,7 @@ type Product = {
   id: number,
   title: string;
   price: number;
+  priceFormatted: string;
 }
 
 interface ProductItemProps {
@@ -15,7 +16,7 @@ interface ProductItemProps {
 const ProductItemComponent: React.FC<ProductItemProps> = ({ product, onAddToWishList }) => {
   return (
     <div>
-      {product.title} -  <strong>{product.price}</strong>
+      {product.title} -  <strong>{product.priceFormatted}</strong>
       <button onClick={() => onAddToWishList(product.id)}>Favoritar</button>
     </div>
   )

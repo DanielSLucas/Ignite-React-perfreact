@@ -5,20 +5,21 @@ type Product = {
   id: number,
   title: string;
   price: number;
+  priceFormatted: string;
 }
 
-// import { Container } from './styles';
 interface SearchResultsProps {
   results: Product[];
+  totalPrice: number;
   onAddToWishList(id: number): Promise<void>;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ results, onAddToWishList }) => {
-  const totalPrice = useMemo(() => {
-    return results.reduce((total, product) => {
-      return total + product.price;
-    }, 0)
-  }, [results])
+const SearchResults: React.FC<SearchResultsProps> = ({ results, totalPrice,onAddToWishList }) => {
+  // const totalPrice = useMemo(() => {
+  //   return results.reduce((total, product) => {
+  //     return total + product.price;
+  //   }, 0)
+  // }, [results])
   
   return (
     <div>
@@ -62,4 +63,10 @@ export default SearchResults;
  * evita que a função seja recriada a cada redenrização,
  * o que pode ser um problema se a função for repassada para vários componentes
  * (context, prop drilling...)
+ */
+
+/**
+ * -> Formatação de dados
+ * preferir fazer a formatação de dados no momento em que eles são buscados/alterados
+ * ao invés de fazer a formatação na hora da renderização ou em um useMemo
  */
