@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductItem from './ProductItem';
+import { ProductItem } from './ProductItem';
 
 type Product = {
   id: number,
@@ -25,3 +25,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
 }
 
 export default SearchResults;
+
+/**
+ * Fluxo de renderizção do react
+ * 1. Criar nova versão do componente
+ * 2. Comparar com a versão anterior
+ * 3. Se houverem alterações, vai atualizar o que alterou
+ */
